@@ -13,7 +13,8 @@ public class WALEntry {
 
     public ByteBuffer serialize(){
       ByteBuffer buffer =  ByteBuffer.allocate(bufferSize());
-      buffer.clear();//TODO: why do we clear first?
+      buffer.clear();
+      buffer.putInt(bufferSize());
       buffer.put(data);
       return buffer;
     }
@@ -25,5 +26,4 @@ public class WALEntry {
     private int sizeOfData() {
         return data.length;
     }
-
 }
