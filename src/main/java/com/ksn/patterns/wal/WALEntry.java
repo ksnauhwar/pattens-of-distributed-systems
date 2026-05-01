@@ -4,7 +4,7 @@ package com.ksn.patterns.wal;
 import java.nio.ByteBuffer;
 
 public class WALEntry {
-    static int sizeOfInt; //TODO: why is this required?
+    static int sizeOfInt = 4;
     private final byte[] data;
 
     public WALEntry(byte[] data){
