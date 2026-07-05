@@ -1,4 +1,5 @@
 package com.ksn.patterns.wal;
 
-public enum CommanType {
+public enum CommandType {
+    Save, Delete
 }
