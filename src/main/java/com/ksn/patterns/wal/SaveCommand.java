@@ -15,14 +15,17 @@ public class SaveCommand extends Command {
     }
 
     @Override
-    public byte[] serialize() throws IOException {
-        ByteArrayOutputStream commandBytes = new ByteArrayOutputStream();
-        DataOutputStream command = new DataOutputStream(commandBytes);
-        command.writeUTF(CommandType.Save.toString());
-        command.writeUTF(key);
-        command.writeUTF(value);
-        command.writeLong(keyValueCheckSum());
-        return commandBytes.toByteArray();
+    public byte[] serialize() {
+        try(ByteArrayOutputStream commandBytes = new ByteArrayOutputStream();
+            DataOutputStream command = new DataOutputStream(commandBytes)) {
+            command.writeUTF(CommandType.Save.toString());
+            command.writeUTF(key);
+            command.writeUTF(value);
+            command.writeLong(keyValueCheckSum());
+            return commandBytes.toByteArray();
+        }catch(IOException exception){
+            return new byte[0];
+        }
     }
 
     private long keyValueCheckSum() {
