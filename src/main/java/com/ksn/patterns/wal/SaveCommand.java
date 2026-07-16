@@ -3,6 +3,8 @@ package com.ksn.patterns.wal;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.zip.CRC32;
 
 public class SaveCommand extends Command {
@@ -16,11 +18,18 @@ public class SaveCommand extends Command {
 
     @Override
     public byte[] serialize() {
+        byte[] typeBytes = CommandType.Save.toString().getBytes(StandardCharsets.UTF_8);
+        byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
+        byte[] valueBytes = value.getBytes(StandardCharsets.UTF_8);
+
         try(ByteArrayOutputStream commandBytes = new ByteArrayOutputStream();
             DataOutputStream command = new DataOutputStream(commandBytes)) {
-            command.writeUTF(CommandType.Save.toString());
-            command.writeUTF(key);
-            command.writeUTF(value);
+            command.writeInt(typeBytes.length);
+            command.write(typeBytes);
+            command.writeInt(keyBytes.length);
+            command.write(keyBytes);
+            command.writeInt(valueBytes.length);
+            command.write(valueBytes);
             command.writeLong(keyValueCheckSum());
             return commandBytes.toByteArray();
         }catch(IOException exception){
