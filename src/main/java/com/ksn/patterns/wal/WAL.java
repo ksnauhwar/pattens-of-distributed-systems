@@ -8,6 +8,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Map;
 
 public class WAL implements Closeable {
     private final Config config;
@@ -44,5 +45,9 @@ public class WAL implements Closeable {
                 throw new RuntimeException("failed to close the wal ",e);
             }
         }
+    }
+
+    public Map<String, String> restore() {
+        return null;
     }
 }
