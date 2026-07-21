@@ -23,4 +23,10 @@ public class DurableKvStore {
     private void appendLog(String key,String value){
         wal.append(new WALEntry(new SaveCommand(key,value)));
     }
+
+    //simulates crash.
+    public void close() {
+        wal.close();
+        store.clear();
+    }
 }
